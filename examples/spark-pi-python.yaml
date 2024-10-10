@@ -16,7 +16,7 @@
 apiVersion: sparkoperator.k8s.io/v1beta2
 kind: SparkApplication
 metadata:
-  name: spark-pi-python
+  name: spark-disposable-email-pipeline
   namespace: default
 spec:
   type: Python
@@ -44,7 +44,7 @@ spec:
   volumes:
     - name: spark-data
       persistentVolumeClaim:
-        claimName: airflow-pvc
+        claimName: data-pipeline-pvc
   driver:
     cores: 1
     memory: 512m
