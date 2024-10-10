@@ -22,15 +22,40 @@ spec:
   type: Python
   pythonVersion: "3"
   mode: cluster
-  image: spark:3.5.2
+  image: ibnummuhammad/spark:3.5.2-v4
   imagePullPolicy: IfNotPresent
-  mainApplicationFile: local:///opt/spark/examples/src/main/python/pi.py
+  mainApplicationFile: local:///mnt/spark/data/staging/dag/disposable_email_pipeline.py
+  arguments:
+    - "--aws"
+    - ""
+    - "--aws_token"
+    - ""
+    - "--data_interval_end"
+    - "2024-10-08 00:00:00"
+    - "--data_interval_start"
+    - "2024-10-07 00:00:00"
+    - "--environment"
+    - local
+    - "--redshift"
+    - ""
+    - "--table"
+    - ""
   sparkVersion: 3.5.2
+  volumes:
+    - name: spark-data
+      persistentVolumeClaim:
+        claimName: airflow-pvc
   driver:
     cores: 1
     memory: 512m
     serviceAccount: spark-operator-spark
+    volumeMounts:
+      - name: spark-data
+        mountPath: /mnt/spark/data
   executor:
     instances: 1
     cores: 1
     memory: 512m
+    volumeMounts:
+      - name: spark-data
+        mountPath: /mnt/spark/data
