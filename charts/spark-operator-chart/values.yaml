@@ -315,7 +315,7 @@ spark:
   # If empty string is included, all namespaces will be allowed.
   # Make sure the namespaces have already existed.
   jobNamespaces:
-  - default
+  - ingestion-pipeline
 
   serviceAccount:
     # -- Specifies whether to create a service account for spark applications.
